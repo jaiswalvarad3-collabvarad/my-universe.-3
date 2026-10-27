@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Roblox Universe</title>
+    <style>
+        :root {
+            --bg-color: #1a1a2e;
+            --text-color: #ffffff;
+            --accent-color: #e94560;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: all 0.5s ease;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        h1 { color: var(--accent-color); margin-bottom: 5px; }
+        .subtitle { font-style: italic; color: #888; margin-bottom: 30px; }
+
+        .roblox-avatar {
+            width: 150px;
+            height: 150px;
+            background: #333;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid var(--accent-color);
+            overflow: hidden;
+        }
+
+        .roblox-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid var(--accent-color);
+            text-align: left;
+        }
+
+        .card h3 { margin-top: 0; color: var(--accent-color); }
+
+        /* Real-time Editor Console */
+        .console-box {
+            margin-top: 40px;
+            background: #111;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .console-box label {
+            display: block;
+            font-family: monospace;
+            color: #0f0;
+            margin-bottom: 8px;
+            text-align: left;
+        }
+
+        .console-input {
+            width: 100%;
+            background: #000;
+            border: 1px solid #0f0;
+            color: #0f0;
+            padding: 10px;
+            font-family: monospace;
+            box-sizing: border-box;
+            border-radius: 4px;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="roblox-avatar">
+            <!-- Replace 'Roblox' with your actual Roblox username to load your real avatar shirt/face if using a custom API, or leave as placeholder -->
+            <img id="avatar-img" src="https://rbxcdn.com" alt="Roblox Character">
+        </div>
+
+        <h1 id="hero-name">Hero: BlocksMan</h1>
+        <p class="subtitle" id="world-name">Universe: Retro Robloxia</p>
+
+        <div class="grid">
+            <div class="card">
+                <h3>⚡ Power</h3>
+                <p id="hero-power">Super Stud Construction & Physics Manipulation</p>
+            </div>
+            <div class="card">
+                <h3>🦹 Nemesis Villain</h3>
+                <p id="villain-name">Lord Glitcher</p>
+            </div>
+            <div class="card">
+                <h3>🌍 World Theme</h3>
+                <p id="world-theme">A neon-lit cyberpunk city made entirely of classic plastic bricks.</p>
+            </div>
+        </div>
+
+        <!-- Live Editor Command Line -->
+        <div class="console-box">
+            <label>> LIVE EDITOR: Type a command (e.g., "power Teleportation" or "hero Super Robloian") and press Enter:</label>
+            <input type="text" id="command-line" class="console-input" placeholder="Type here...">
+        </div>
+    </div>
+
+    <script>
+        const commandInput = document.getElementById('command-line');
+        
+        // Target elements
+        const heroNameEl = document.getElementById('hero-name');
+        const worldNameEl = document.getElementById('world-name');
+        const powerEl = document.getElementById('hero-power');
+        const villainEl = document.getElementById('villain-name');
+        const themeEl = document.getElementById('world-theme');
+        const avatarImg = document.getElementById('avatar-img');
+
+        commandInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const rawInput = this.value.trim();
+                if (!rawInput) return;
+
+                // Split into command and value (e.g., "hero My New Name")
+                const firstSpace = rawInput.indexOf(' ');
+                if (firstSpace === -1) {
+                    alert("Invalid format! Use: command value (e.g., 'power Flying')");
+                    return;
+                }
+
+                const command = rawInput.substring(0, firstSpace).toLowerCase();
+                const value = rawInput.substring(firstSpace + 1);
+
+                // Execute the live update dynamically
+                switch(command) {
+                    case 'hero':
+                        heroNameEl.innerText = "Hero: " + value;
+                        break;
+                    case 'world':
+                        worldNameEl.innerText = "Universe: " + value;
+                        break;
+                    case 'power':
+                        powerEl.innerText = value;
+                        break;
+                    case 'villain':
+                        villainEl.innerText = value;
+                        break;
+                    case 'theme':
+                        themeEl.innerText = value;
+                        break;
+                    case 'bg':
+                        document.documentElement.style.setProperty('--bg-color', value);
+                        break;
+                    case 'roblox':
+                        // Changes the image placeholder or pulls a standard thumbnail format
+                        avatarImg.src = `https://roblox.com{value}&width=420&height=420&format=png`;
+                        break;
+                    default:
+                        alert(`Unknown command: "${command}". Try: hero, world, power, villain, theme, bg, or roblox`);
+                }
+
+                // Clear the console line after executing
+                this.value = '';
+            }
+        });
+    </script>
+</body>
+</html>
